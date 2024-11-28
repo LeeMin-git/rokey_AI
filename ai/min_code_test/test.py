@@ -3,7 +3,8 @@ from requests.auth import HTTPBasicAuth
 import cv2
 import os
 
-URL = "https://suite-endpoint-api-apne2.superb-ai.com/endpoints/12f80a0d-9fe2-44bd-948a-5f191671c333/inference"
+# URL = "https://suite-endpoint-api-apne2.superb-ai.com/endpoints/12f80a0d-9fe2-44bd-948a-5f191671c333/inference"
+URL ='https://suite-endpoint-api-apne2.superb-ai.com/endpoints/456a68c5-b226-4292-9380-05155fbcdd47/inference'
 ACCESS_KEY = "WpML0KMYxjSAzChtIdDNaXWQTpPQwmW7utBS02L2"
 TEAM_NAME = 'kdt2024_1-12'
 
@@ -11,11 +12,11 @@ class_cnt = {'RASPBERRY PICO':0,'CHIPSET':0,
                 'USB':0,'HOLE':0,
                 'OSCILLATOR':0,'BOOTCEL':0}
 
-data_set = os.listdir('./val_dataset') 
+data_set = os.listdir('./ai/min_code_test/normal') #여기 
 
 for data in data_set:
     img_set = data
-    IMAGE_FILE_PATH = "val_dataset/"+img_set # 이미지 하나
+    IMAGE_FILE_PATH = "./ai/min_code_test/normal/"+img_set # 이미지 하나 #여기
 
     image = open(IMAGE_FILE_PATH, "rb").read()
 
@@ -29,7 +30,7 @@ for data in data_set:
     result = response.json()['objects']
     print(result)
 
-    img_path = 'val_dataset/'+img_set
+    img_path = './ai/min_code_test/normal/'+img_set #여기
     img = cv2.imread(img_path)
 
     a,b=0,20
@@ -43,7 +44,7 @@ for data in data_set:
     class_start_point = [0,25]
     color_lst = {'RASPBERRY PICO':[0,0,255],'CHIPSET':[255,0,0],
                 'USB':[0,255,0],'HOLE':[255,255,0],
-                'OSCILLATOR':[0,255,255],'BOOTCEL':[255,255,255]}
+                'OSCILLATOR':[0,255,255],'BOOTCEL':[20,100,150]}
 
     for i in result:
         name = i['class']
