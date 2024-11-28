@@ -1,7 +1,3 @@
-<2024-11-28 목>
-
-
-
 <2024-11-27 수>
 - superb AI(https://platform.superb-ai.com)플랫폼을 통해 생성한 모델을 통해 이미지 인식률 확인
 - url을 통해 테스트하는 방법을 python으로 구현
