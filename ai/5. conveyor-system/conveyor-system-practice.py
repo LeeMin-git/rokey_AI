@@ -82,8 +82,9 @@ while 1:
             img = crop_img(img, crop_info)
 
         cv2.imshow("", img)
-        cv2.waitKey(1)
+        key = cv2.waitKey(1)
         result = inference_reqeust(img, api_url)
-        ser.write(b"1")
+        if key == ord("q"):
+            ser.write(b"1")
     else:
         pass

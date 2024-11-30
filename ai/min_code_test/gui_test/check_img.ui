@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>722</width>
-    <height>830</height>
+    <width>667</width>
+    <height>625</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,8 +18,8 @@
     <rect>
      <x>10</x>
      <y>40</y>
-     <width>700</width>
-     <height>700</height>
+     <width>640</width>
+     <height>480</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -32,8 +32,8 @@
   <widget class="QPushButton" name="btn_next">
    <property name="geometry">
     <rect>
-     <x>550</x>
-     <y>760</y>
+     <x>490</x>
+     <y>540</y>
      <width>160</width>
      <height>60</height>
     </rect>
@@ -42,17 +42,17 @@
     <string>NEXT</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_cancel">
+  <widget class="QPushButton" name="btn_exit">
    <property name="geometry">
     <rect>
-     <x>10</x>
-     <y>760</y>
+     <x>0</x>
+     <y>540</y>
      <width>160</width>
      <height>60</height>
     </rect>
    </property>
    <property name="text">
-    <string>CANCEL</string>
+    <string>EIXT</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_img_name">
@@ -70,5 +70,42 @@
   </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>btn_exit</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>exit()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>127</x>
+     <y>781</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>256</x>
+     <y>781</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_next</sender>
+   <signal>clicked()</signal>
+   <receiver>Form</receiver>
+   <slot>next()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>575</x>
+     <y>787</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>465</x>
+     <y>775</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>exit()</slot>
+  <slot>next()</slot>
+ </slots>
 </ui>

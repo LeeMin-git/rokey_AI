@@ -14,22 +14,24 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName("Form")
-        Form.resize(722, 830)
+        Form.resize(667, 625)
         self.label_img_show = QtWidgets.QLabel(Form)
-        self.label_img_show.setGeometry(QtCore.QRect(10, 40, 700, 700))
+        self.label_img_show.setGeometry(QtCore.QRect(10, 40, 640, 480))
         self.label_img_show.setStyleSheet("background-color: rgb(255,255,255)")
         self.label_img_show.setObjectName("label_img_show")
         self.btn_next = QtWidgets.QPushButton(Form)
-        self.btn_next.setGeometry(QtCore.QRect(550, 760, 160, 60))
+        self.btn_next.setGeometry(QtCore.QRect(490, 540, 160, 60))
         self.btn_next.setObjectName("btn_next")
-        self.btn_cancel = QtWidgets.QPushButton(Form)
-        self.btn_cancel.setGeometry(QtCore.QRect(10, 760, 160, 60))
-        self.btn_cancel.setObjectName("btn_cancel")
+        self.btn_exit = QtWidgets.QPushButton(Form)
+        self.btn_exit.setGeometry(QtCore.QRect(0, 540, 160, 60))
+        self.btn_exit.setObjectName("btn_exit")
         self.label_img_name = QtWidgets.QLabel(Form)
         self.label_img_name.setGeometry(QtCore.QRect(290, 10, 141, 21))
         self.label_img_name.setObjectName("label_img_name")
 
         self.retranslateUi(Form)
+        self.btn_exit.clicked.connect(Form.exit) # type: ignore
+        self.btn_next.clicked.connect(Form.next) # type: ignore
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
@@ -37,7 +39,7 @@ class Ui_Form(object):
         Form.setWindowTitle(_translate("Form", "Form"))
         self.label_img_show.setText(_translate("Form", "TextLabel"))
         self.btn_next.setText(_translate("Form", "NEXT"))
-        self.btn_cancel.setText(_translate("Form", "CANCEL"))
+        self.btn_exit.setText(_translate("Form", "EIXT"))
         self.label_img_name.setText(_translate("Form", "TextLabel"))
 
 

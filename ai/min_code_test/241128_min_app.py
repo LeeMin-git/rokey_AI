@@ -5,7 +5,6 @@ import numpy as np
 from PIL import Image
 from requests.auth import HTTPBasicAuth
 
-
 # 가상의 비전 AI API URL (예: 객체 탐지 API)
 VISION_API_URL = "https://suite-endpoint-api-apne2.superb-ai.com/endpoints/12f80a0d-9fe2-44bd-948a-5f191671c333/inference"
 ACCESS_KEY = "WpML0KMYxjSAzChtIdDNaXWQTpPQwmW7utBS02L2"
