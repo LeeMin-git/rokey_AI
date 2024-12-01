@@ -47,12 +47,12 @@ def crop_img(img, size_dict):
 def determine_defect_status(obj_name_count): 
     ## 개수를 통해 양품인지 아닌지 판단하는 코드
     """Determine defect status and reason based on object counts."""
-    RASPBERRYPICO = obj_name_count.get('RASPBERRY PICO', 0)
-    USB = obj_name_count.get('USB', 0)
-    BOOTCEL = obj_name_count.get('BOOTCEL', 0)
-    CHIPSET = obj_name_count.get('CHIPSET', 0)
-    OSCILLATOR = obj_name_count.get('OSCILLATOR', 0)
-    HOLE = obj_name_count.get('HOLE', 0)
+    BOOTCEL = obj_name_count.get('1', 0)
+    CHIPSET = obj_name_count.get('2', 0)
+    HOLE = obj_name_count.get('3', 0)
+    OSCILLATOR = obj_name_count.get('4', 0)
+    RASPBERRYPICO = obj_name_count.get('5', 0)
+    USB = obj_name_count.get('6', 0)
 
     defect_reason = ""
     if RASPBERRYPICO > 1:
@@ -145,7 +145,7 @@ def img_detecting(img):
 
         class_start_point[1] += 25
 
-    ## 코드 수정한 것이 동작을 잘하면 실행해보기
+    ## 코드 수정한 것이 동작을 잘하면 실행해보기 - class_cnt를 써야해서 여기에 넣음
     # # Calculate accuracy for each class
     # for class_name in class_cnt:
     #     if total_class_cnt[class_name] > 0:
@@ -195,7 +195,6 @@ def main():
             img_binary = img_buffer.tobytes()
             is_defective,defect_reason = determine_defect_status(class_cnt)
             send_DB(is_defective,defect_reason,img_binary)
-
             ser.write(b"1")
         else:
             pass
