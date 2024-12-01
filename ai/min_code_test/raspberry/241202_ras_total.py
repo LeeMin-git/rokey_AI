@@ -1,3 +1,4 @@
+#-*- coding:utf-8-*-
 from requests.auth import HTTPBasicAuth
 from io import BytesIO
 from pprint import pprint
@@ -12,6 +13,7 @@ import sqlite3
 import uuid
 
 ser = serial.Serial("/dev/ttyACM0", 9600)
+start_num = 0
 
 # API endpoint
 api_url = ""
@@ -47,33 +49,36 @@ def crop_img(img, size_dict):
 def determine_defect_status(obj_name_count): 
     ## 개수를 통해 양품인지 아닌지 판단하는 코드
     """Determine defect status and reason based on object counts."""
-    RASPBERRYPICO = obj_name_count.get('RASPBERRY PICO', 0)
-    USB = obj_name_count.get('USB', 0)
-    BOOTCEL = obj_name_count.get('BOOTCEL', 0)
-    CHIPSET = obj_name_count.get('CHIPSET', 0)
-    OSCILLATOR = obj_name_count.get('OSCILLATOR', 0)
-    HOLE = obj_name_count.get('HOLE', 0)
+    BOOTCEL = obj_name_count.get('1', 0)
+    CHIPSET = obj_name_count.get('2', 0)
+    HOLE = obj_name_count.get('3', 0)
+    OSCILLATOR = obj_name_count.get('4', 0)
+    RASPBERRYPICO = obj_name_count.get('5', 0)
+    USB = obj_name_count.get('6', 0)
+
+    print(RASPBERRYPICO)
 
     defect_reason = ""
-    if RASPBERRYPICO > 1:
+    if not RASPBERRYPICO == 1:
         is_defective = 1
-        defect_reason = "RASPBERRY PICO 부품 수 초과"
-    elif USB > 1:
+        defect_reason += "\nRASPBERRY PICO 부품 수 초과"
+    if not USB == 1:
         is_defective = 1
-        defect_reason = "USB 부품 수 초과"
-    elif BOOTCEL > 1:
+        defect_reason += "\nUSB 부품 수 초과"
+    if not BOOTCEL == 1:
         is_defective = 1
-        defect_reason = "BOOTCEL 부품 수 초과"
-    elif CHIPSET > 1:
+        defect_reason += "\nBOOTCEL 부품 수 초과"
+    if not CHIPSET == 1:
         is_defective = 1
-        defect_reason = "CHIPSET 부품 수 초과"
-    elif OSCILLATOR > 1:
+        defect_reason += "\nCHIPSET 부품 수 초과"
+    if not OSCILLATOR == 4:
         is_defective = 1
-        defect_reason = "OSCILLATOR 부품 수 초과"
-    elif HOLE >= 4:
+        defect_reason += "\nOSCILLATOR 부품 수 초과"
+    if HOLE > 4 or HOLE <= 3:
         is_defective = 1
-        defect_reason = "HOLE 결함 (3개 이상)"
-    else:
+        defect_reason += "\nHOLE 결함"
+
+    if defect_reason == "":
         is_defective = 0
         defect_reason = "양품"
     
@@ -83,7 +88,7 @@ def send_DB(is_defective,defect_reason,img_binary):
     ## 데이터 베이스로 정보를 보내는 함수
     conn = sqlite3.connect('example.db')
     cursor = conn.cursor()
-    cursor.execute('''
+    aa=cursor.execute('''
         INSERT INTO 제품 (datetime, uuid, is_defective, defect_reason, image)
         VALUES (datetime('now'), ?, ?, ?, ?)
     ''', (str(uuid.uuid4()), is_defective, defect_reason, img_binary))
@@ -123,7 +128,7 @@ def img_detecting(img):
     )
 
     result = response.json()['objects']
-    print(result)
+    #print(result)
 
     img = cv2.imread(img)
     
@@ -137,7 +142,7 @@ def img_detecting(img):
         end_point=[int(x2),int(y2)]
 
         cv2.rectangle(img,start_point,end_point,color_lst[str(name)],thinkness)
-        cv2.putText(img,str(name),start_point1,font,font_scale,color_lst[str(name)],thinkness) 
+        #cv2.putText(img,str(name),start_point1,font,font_scale,color_lst[str(name)],thinkness) 
 
     for j in class_cnt:
         text = class_name[j] +': '+str(class_cnt[j])
@@ -162,9 +167,9 @@ def img_detecting(img):
     
 def save_img():
     ## 물체를 인식한 이미지와 인식 전 이미지를 폴더에 저장하는 함수
+    global start_num
     folder_name = 'img_3'
     detect_folder = 'detect_img_1'
-    start_num = int(input('start_num: '))
     img = get_img()
     if not os.path.exists(folder_name):
         os.makedirs(folder_name)
@@ -186,6 +191,8 @@ def save_img():
     return class_cnt,detect_img
     
 def main():
+    global start_num
+    start_num = int(input('start_num: '))
     while 1:
         data = ser.read()
         print(data)
