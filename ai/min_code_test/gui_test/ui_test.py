@@ -4,6 +4,7 @@ from ui_check_img import Ui_Form
 import sys
 import threading
 import cv2
+import time
 
 class UI_image_test(QWidget):
     def __init__(self):
@@ -22,19 +23,22 @@ class UI_image_test(QWidget):
 
         while self.cam.isOpened():
             ret,img=self.cam.read()
-            img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
-            h,w,c = img.shape
-            qImg = QtGui.QImage(img, w, h, w*c, QtGui.QImage.Format_RGB888)
-            pixmap = QtGui.QPixmap.fromImage(qImg)
-            self.ui.label_img_show.setPixmap(pixmap)
-        self.cam.release()
+            if ret:
+                img = cv2.cvtColor(img,cv2.COLOR_BGR2RGB)
+                h,w,c = img.shape
+                qImg = QtGui.QImage(img.data, w, h, w*c, QtGui.QImage.Format_RGB888)
+                pixmap = QtGui.QPixmap.fromImage(qImg)
+                self.ui.label_img_show.setPixmap(pixmap)
+            else:
+                print("omg")
+                break
 
     def exit(self):
         self.cam.release()
         self.close()
 
     def next(self):
-        self.thread1 =threading.Thread(target=self.img_show())
+        self.thread1 =threading.Thread(target=self.img_show)
         self.thread1.start()
 
 def main():
